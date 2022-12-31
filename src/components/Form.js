@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
 const Form = () => {
+  const data = useSelector((state) => state?.list);
+  const dispatch = useDispatch();
   const [text, setText] = useState("");
-  const [data, setData] = useState([]);
   const submitHandler = (e) => {
     e.preventDefault();
-    const list = {
-      text: text,
-    };
-    setData([...data, list]);
+    dispatch({
+      type: "ADD",
+      payload: text,
+    });
     setText("");
   };
   return (
@@ -29,8 +30,9 @@ const Form = () => {
 
         <button>Submit</button>
         <div>
+          {console.log(data)}
           {data.map((i) => {
-            return <h3>{i.text}</h3>;
+            return <h3>{i}</h3>;
           })}
         </div>
       </form>
